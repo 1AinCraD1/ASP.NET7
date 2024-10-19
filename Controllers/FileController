@@ -1,0 +1,31 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Text;
+
+namespace Project.Controllers
+{
+    public class FileController : Controller
+    {
+        [HttpGet]
+        public IActionResult DownloadFile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DownloadFile(string firstName, string lastName, string fileName)
+        {
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(fileName))
+            {
+                ModelState.AddModelError("", "Всі поля повинні бути заповнені.");
+                return View();
+            }
+
+            var fileContent = $"Ім'я: {firstName}\nПрізвище: {lastName}";
+
+            var byteArray = Encoding.UTF8.GetBytes(fileContent);
+            var fileStream = new System.IO.MemoryStream(byteArray);
+
+            return File(fileStream, "text/plain", $"{fileName}.txt");
+        }
+    }
+}
