@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Завантажити файл";
+}
+
+<h2>Створення та завантаження файлу</h2>
+
+<form method="post">
+    <div>
+        <label for="firstName">Ім'я:</label>
+        <input type="text" id="firstName" name="firstName" required />
+    </div>
+    <div>
+        <label for="lastName">Прізвище:</label>
+        <input type="text" id="lastName" name="lastName" required />
+    </div>
+    <div>
+        <label for="fileName">Назва файлу:</label>
+        <input type="text" id="fileName" name="fileName" required />
+    </div>
+    <br />
+    <button type="submit">Продовжити</button>
+</form>
+
+@if (!ViewData.ModelState.IsValid)
+
+{
+    <div style="color:red;">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
